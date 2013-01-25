@@ -1,11 +1,15 @@
 package de.lucaswerkmeister.code.turing;
 
 public abstract class TuringMachine extends Thread {
-	private final Memory memory;
-	protected static final char BLANK = '☐';
-	private boolean wasStarted = false;
-	protected int state;
-	private static final boolean DEBUG = true;
+	private final Memory		memory;
+	protected static final char	BLANK					= '☐';
+	private boolean				wasStarted				= false;
+	protected int				state;
+	private static final int	DEBUG					= -1;		// set all bits
+	private static final int	DEBUG_PRINT_TRANSITIONS	= 1;
+	private static final int	DEBUG_PRINT_MEMORY		= 2;
+	private char				written;
+	private byte				movement				= 0;
 
 	public TuringMachine(String input) {
 		memory = new Memory(BLANK, input);
@@ -16,12 +20,16 @@ public abstract class TuringMachine extends Thread {
 		state = 0;
 		while (state != -1) {
 			char read = memory.read();
-			System.out.print("(");
-			System.out.print(state);
-			System.out.print(",");
-			System.out.print(read);
-			System.out.print(") -> (");
-			simulate(read);
+			if ((DEBUG & DEBUG_PRINT_TRANSITIONS) != 0) {
+				written = read;
+				movement = 0;
+				System.out.print("(" + state + "," + read + ") -> (");
+				simulate(read);
+				System.out.println(state + "," + written + "," + movement + ")");
+			}
+			if ((DEBUG & DEBUG_PRINT_MEMORY) != 0) {
+				System.out.println(memory.getContent());
+			}
 		}
 	}
 
@@ -29,10 +37,12 @@ public abstract class TuringMachine extends Thread {
 
 	protected final void write(char c) {
 		memory.write(c);
+		written = c;
 	}
 
 	protected final void step(int direction) {
-		memory.step((byte) Integer.signum(direction));
+		movement = (byte) Integer.signum(direction);
+		memory.step(movement);
 	}
 
 	public String getResult() throws IllegalAccessException {
