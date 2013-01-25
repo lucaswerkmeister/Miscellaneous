@@ -9,51 +9,55 @@ public class GbiTm extends TuringMachine {
 	}
 
 	@Override
-	protected void step(char input) {
+	protected void simulate(char input) {
 		switch (state) {
 		case 0:
 			switch (input) {
 			case a:
 				state = 1;
-				memory.write(BLANK);
+				write(BLANK);
+				step(0);
 				break;
 			case b:
 				state = 5;
-				memory.write(a);
+				write(a);
+				step(0);
 				break;
 			case BLANK:
 				state = -1;
 				return;
 			}
-			memory.stepRight();
+			step(1);
 			return;
 		case 1:
 			switch (input) {
 			case a:
 				state = 1;
+				step(0);
 				break;
 			case b:
 				state = 2;
+				step(0);
 				break;
 			case BLANK:
 				state = -1;
 				return;
 			}
-			memory.stepRight();
+			step(1);
 			return;
 		case 2:
 			switch (input) {
 			case a:
 				state = 3;
-				memory.stepLeft();
+				step(-1);
 				return;
 			case b:
 				state = 2;
-				memory.stepRight();
+				step(1);
 				return;
 			case BLANK:
 				state = 3;
-				memory.stepLeft();
+				step(-1);
 				return;
 			}
 		case 3:
@@ -63,8 +67,8 @@ public class GbiTm extends TuringMachine {
 				return;
 			case b:
 				state = 4;
-				memory.write(a);
-				memory.stepLeft();
+				write(a);
+				step(-1);
 				return;
 			case BLANK:
 				state = -1;
@@ -74,32 +78,32 @@ public class GbiTm extends TuringMachine {
 			switch (input) {
 			case a:
 				state = 4;
-				memory.stepLeft();
+				step(-1);
 				return;
 			case b:
 				state = 4;
-				memory.stepLeft();
+				step(-1);
 				return;
 			case BLANK:
 				state = 0;
-				memory.stepRight();
+				step(1);
 				return;
 			}
 		case 5:
 			switch (input) {
 			case a:
 				state = 5;
-				memory.write(b);
-				memory.stepRight();
+				write(b);
+				step(1);
 				return;
 			case b:
 				state = 5;
-				memory.write(a);
-				memory.stepRight();
+				write(a);
+				step(1);
 				return;
 			case BLANK:
 				state = 4;
-				memory.stepLeft();
+				step(-1);
 				return;
 			}
 		}
