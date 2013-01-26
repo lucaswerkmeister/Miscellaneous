@@ -5,9 +5,9 @@ public abstract class TuringMachine extends Thread {
 	protected static final char	BLANK					= '☐';
 	private boolean				wasStarted				= false;
 	protected int				state;
-	private static final int	DEBUG					= -1;		// set all bits
-	private static final int	DEBUG_PRINT_TRANSITIONS	= 1;
-	private static final int	DEBUG_PRINT_MEMORY		= 2;
+	protected static int		DEBUG					= 0;
+	protected static final int	DEBUG_PRINT_TRANSITIONS	= 1;
+	protected static final int	DEBUG_PRINT_MEMORY		= 2;
 	private char				written;
 	private byte				movement				= 0;
 
@@ -24,7 +24,9 @@ public abstract class TuringMachine extends Thread {
 				written = read;
 				movement = 0;
 				System.out.print("(" + state + "," + read + ") -> (");
-				simulate(read);
+			}
+			simulate(read);
+			if ((DEBUG & DEBUG_PRINT_TRANSITIONS) != 0) {
 				System.out.println(state + "," + written + "," + movement + ")");
 			}
 			if ((DEBUG & DEBUG_PRINT_MEMORY) != 0) {
