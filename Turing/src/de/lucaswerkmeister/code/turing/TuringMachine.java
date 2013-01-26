@@ -47,9 +47,9 @@ public abstract class TuringMachine extends Thread {
 		memory.step(movement);
 	}
 
-	public String getResult() throws IllegalAccessException {
+	public String getResult() {
 		if (isAlive() || !wasStarted)
-			throw new IllegalAccessException("Not yet finished");
+			throw new IllegalStateException("Not yet finished");
 		return memory.getContent().replaceAll("(^" + BLANK + "*)|(" + BLANK + "*$)", "");
 	}
 }
