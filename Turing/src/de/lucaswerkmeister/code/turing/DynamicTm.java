@@ -66,7 +66,7 @@ public class DynamicTm extends TuringMachine {
 		}
 	}
 
-	public static void main(String[] args) throws InterruptedException {
+	public static void main(String[] args) throws Throwable {
 		DynamicTm tm = new DynamicTm("aabbbb",
 				new State(0, new Transition('a', 1, BLANK, 1),
 						new Transition('b', 5, 'a', 1)),
