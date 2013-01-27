@@ -56,7 +56,7 @@ public class FileTm extends DynamicTm {
 		else if (args.length == 2)
 			tm = new FileTm(args[1], args[0]);
 		else
-			throw new IllegalArgumentException("Not enough or too many arguments! Usage: FileTm <input> <filename>");
+			throw new IllegalArgumentException("Not enough or too many arguments! Usage: FileTm <filename> <input>");
 		tm.start();
 		tm.join();
 		System.out.println(tm.getResult());
