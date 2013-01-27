@@ -42,7 +42,7 @@ public class DynamicTm extends TuringMachine {
 		step(movement.get(oldState).get(input));
 	}
 
-	public class State {
+	public static class State {
 		private final int			id;
 		private final Transition[]	transitions;
 
@@ -51,7 +51,7 @@ public class DynamicTm extends TuringMachine {
 			this.transitions = transitions;
 		}
 
-		public class Transition {
+		public static class Transition {
 			private final char	input;
 			private final int	toState;
 			private final char	output;
@@ -67,23 +67,21 @@ public class DynamicTm extends TuringMachine {
 	}
 
 	public static void main(String[] args) throws InterruptedException {
-		DynamicTm dummyTm = new DynamicTm("");
-		State dummy = dummyTm.new State(-1);
 		DynamicTm tm = new DynamicTm("aabbbb",
-				dummyTm.new State(0, dummy.new Transition('a', 1, BLANK, 1),
-						dummy.new Transition('b', 5, 'a', 1)),
-				dummyTm.new State(1, dummy.new Transition('a', 1, 'a', 1),
-						dummy.new Transition('b', 2, 'b', 1)),
-				dummyTm.new State(2, dummy.new Transition('a', 3, 'a', -1),
-						dummy.new Transition('b', 2, 'b', 1),
-						dummy.new Transition(BLANK, 3, BLANK, -1)),
-				dummyTm.new State(3, dummy.new Transition('b', 4, 'a', -1)),
-				dummyTm.new State(4, dummy.new Transition('a', 4, 'a', -1),
-						dummy.new Transition('b', 4, 'b', -1),
-						dummy.new Transition(BLANK, 0, BLANK, 1)),
-				dummyTm.new State(5, dummy.new Transition('a', 5, 'b', 1),
-						dummy.new Transition('b', 5, 'a', 1),
-						dummy.new Transition(BLANK, 4, BLANK, -1)));
+				new State(0, new Transition('a', 1, BLANK, 1),
+						new Transition('b', 5, 'a', 1)),
+				new State(1, new Transition('a', 1, 'a', 1),
+						new Transition('b', 2, 'b', 1)),
+				new State(2, new Transition('a', 3, 'a', -1),
+						new Transition('b', 2, 'b', 1),
+						new Transition(BLANK, 3, BLANK, -1)),
+				new State(3, new Transition('b', 4, 'a', -1)),
+				new State(4, new Transition('a', 4, 'a', -1),
+						new Transition('b', 4, 'b', -1),
+						new Transition(BLANK, 0, BLANK, 1)),
+				new State(5, new Transition('a', 5, 'b', 1),
+						new Transition('b', 5, 'a', 1),
+						new Transition(BLANK, 4, BLANK, -1)));
 		tm.start();
 		tm.join();
 		System.out.println(tm.getResult());
