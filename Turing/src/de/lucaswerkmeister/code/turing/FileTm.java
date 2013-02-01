@@ -27,8 +27,7 @@ public class FileTm extends DynamicTm {
 			String line = reader.readLine();
 			int currentId = Integer.parseInt(line);
 			while (line != null) {
-				if (line.startsWith("\t"))
-				{
+				if (line.startsWith("\t")) {
 					String[] halves = line.split("->");
 					char input = halves[0].trim().charAt(0);
 					String[] rightHalf = halves[1].trim().split(",");
@@ -36,8 +35,7 @@ public class FileTm extends DynamicTm {
 					char output = rightHalf[1].charAt(0);
 					byte movement = Byte.parseByte(rightHalf[2]);
 					transitions.add(new Transition(input, toState, output, movement));
-				}
-				else {
+				} else {
 					states.add(new State(currentId, transitions.toArray(new Transition[transitions.size()])));
 					transitions.clear();
 					currentId = Integer.parseInt(line);
@@ -57,6 +55,7 @@ public class FileTm extends DynamicTm {
 			tm = new FileTm(args[1], args[0]);
 		else
 			throw new IllegalArgumentException("Not enough or too many arguments! Usage: FileTm <filename> <input>");
+		TuringMachine.DEBUG = TuringMachine.DEBUG_PRINT_MEMORY;
 		tm.start();
 		tm.join();
 		System.out.println(tm.getResult());
