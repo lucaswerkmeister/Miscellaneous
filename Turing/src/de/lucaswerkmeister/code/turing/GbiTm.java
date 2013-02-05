@@ -112,7 +112,7 @@ public class GbiTm extends TuringMachine {
 	public static void main(String[] args) throws InterruptedException {
 		DEBUG = 0;
 		DEBUG |= DEBUG_PRINT_MEMORY;
-		// DEBUG |= DEBUG_PRINT_TRANSITIONS;
+		DEBUG |= DEBUG_PRINT_TRANSITIONS;
 		GbiTm tm = new GbiTm("aabbbb");
 		tm.start();
 		tm.join();
