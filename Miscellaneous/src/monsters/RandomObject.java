@@ -60,7 +60,6 @@ public class RandomObject {
 			else if (type == Character.TYPE)
 				return (char) rand.nextInt();
 			else {
-				indentation += ' ';
 				boolean fail = true;
 				Constructor<?>[] constrsA = type.getDeclaredConstructors();
 				List<Constructor<?>> constrs = new ArrayList<>(Arrays.asList(constrsA));
@@ -93,9 +92,7 @@ public class RandomObject {
 													: t.getMessage()));
 					}
 				}
-				for (Field f : o.getClass().getDeclaredFields())
-					randomizeField(o, f);
-				return o;
+				return randomizeObject(o);
 			}
 		}
 		finally {
@@ -114,6 +111,6 @@ public class RandomObject {
 
 	public static void main(String[] args) throws InstantiationException, IllegalAccessException,
 			IllegalArgumentException, InvocationTargetException {
-		System.out.println(randomizeObject("Hello World!"));
+		System.out.println(randomObject(StringBuilder.class));
 	}
 }
